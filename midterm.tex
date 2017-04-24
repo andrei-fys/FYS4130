@@ -179,6 +179,115 @@ See Fig. \ref{fig:taskc}
 \subsection{}
 N=2 corresponds $\mu/\epsilon$=-2
 \section{Problem 2: Quantum statistics}
+
+If $\epsilon_i$ is a single particle energy, $i$ - is a single particle state and $n_i$ is a number of particles in state $i$ or an occupancy number. If $s$ is a microstate, then the energy of this microstate $s$ can be expressed as(due to non-interaction between particles):
+
+\begin{equation}
+E_s = \sum_i n_i(s)\epsilon_i
+\end{equation}
+
+\begin{equation}
+N_s = \sum_i n_i(s)
+\end{equation}
+
+Grand canonical partition function is then:
+
+\begin{align}
+\begin{split}
+\Xi = \sum_{N=0}^{\infty} \sum_s e^{-\beta(E_s - \mu N_s)} = \sum_{N=0}^{\infty} \sum_s e^{-\beta(\sum_i n_i(s)\epsilon_i - \mu \sum_i n_i(s))} =\\
+= \sum_{N=0}^{\infty} \sum_s e^{-\beta\sum_i n_i(s)(\epsilon_i - \mu)} = \sum_{N=0}^{\infty} \sum_s \prod_i e^{-\beta n_i(s)(\epsilon_i - \mu)}
+\end{split}
+\end{align}
+
+every state $s$ has its own set of $n_i$, so instead of summation over microstates we can sum over occupation number:
+
+\begin{equation}\label{eq:sppf}
+\Xi = \sum_{n_i} \prod_i e^{-\beta n_i(s)(\epsilon_i - \mu)} = \prod_i \sum_{n_i}  e^{-\beta n_i(s)(\epsilon_i - \mu)}
+\end{equation}
+
+In the last equation we can change summation and product as all sets of $n_i$ are independent of each other.
+Denoting $\Xi_i$ single particle state partition function equation \ref{eq:sppf} is then:
+
+\begin{equation}
+\Xi = \prod_i \Xi_i,
+\end{equation}
+where
+
+\begin{equation}\label{allll1}
+\Xi_i = \sum_{n_i}  e^{-\beta n_i(s)(\epsilon_i - \mu)}
+\end{equation}
+
+Then we can write Landau free energy, average occupation number and occupation number fluctuation as:
+
+\begin{equation}
+\Omega_i = -\frac{1}{\beta}ln\Xi_i
+\end{equation}
+
+
+\begin{equation}
+\langle n_i \rangle = -\frac{\partial \Omega_i}{\partial \mu}
+\end{equation}
+
+\begin{equation}\label{allll2}
+\sigma^2 = \frac{1}{\beta} \frac{\partial \langle n_i \rangle}{\partial \mu}
+\end{equation}
+
+Applying equations (\ref{allll1}) - (\ref{allll2}) for different statistics one gets:
+
+In Maxwell-Boltzmann statistics:
+\begin{equation}
+\Xi_i^{MB} = \Xi_i/n! = exp[e^{-\beta (\epsilon - \mu)}]
+\end{equation}
+
+\begin{equation}
+\Omega_i^{MB} = -\frac{1}{\beta} e^{-\beta (\epsilon_i - \mu)}
+\end{equation}
+
+\begin{equation}
+\langle n_i\rangle  =  e^{-\beta (\epsilon_i - \mu)} \Rightarrow \mu = \epsilon + \frac{ln\langle n_i\rangle }{\beta}
+\end{equation}
+
+\begin{equation}
+P_i^{MB} = \frac{1}{\Xi_i^{MB}} e^{-\beta (\epsilon_i - \mu)} = \frac{\langle n_i\rangle }{n_i!}e^{-\langle n_i\rangle }
+\end{equation}
+
+\begin{equation}
+\sigma^2_{MB} = e^{-\beta (\epsilon_i - \mu)} = \langle n_i\rangle
+\end{equation}
+
+\begin{equation}
+\frac{\delta n_i}{\langle n_i\rangle} = \frac{1}{\sqrt{\langle n_i\rangle}}
+\end{equation}
+
+In Fermi-Dirac statistics:
+\begin{equation}
+\Xi_i^{FD} = 1 + e^{-\beta (\epsilon_i - \mu)}
+\end{equation}
+
+
+\begin{equation}
+P_i^{FD} = (1-\langle n_i\rangle)^{1-n_i} \langle n_i\rangle ^{n_i}
+\end{equation}
+
+
+\begin{equation}
+\frac{\delta n_i}{\langle n_i\rangle} = \sqrt{\frac{1 - \langle n_i\rangle}{\langle n_i\rangle}}
+\end{equation}
+
+In Bose-Einstein statistics:
+\begin{equation}
+\Xi_i^{BE} = \frac{e^{-\beta (\epsilon_i - \mu)}}{e^{-\beta (\epsilon_i - \mu)} -1}
+\end{equation}
+
+\begin{equation}
+P_i^{BE} = (1 + \langle n_i\rangle)^{-1 - n_i} \langle n_i\rangle ^{n_i}
+\end{equation}
+
+
+\begin{equation}
+\frac{\delta n_i}{\langle n_i\rangle} = \sqrt{\frac{1 + \langle n_i\rangle}{\langle n_i\rangle}}
+\end{equation}
+
 \section{Problem 3: Relaxation to equilibrium}
 One can write master equation for each energy level($\pm \epsilon$):
 \begin{equation}\label{minus}
@@ -274,7 +383,7 @@ Master equation for 1D random walk:
 \subsection{}
 To solve master equation we use generating function method. Lets write generating function for a general case:
 
-\begin{equation}
+\begin{equation}\label{eq:genfungen}
 G(s,t) = \sum_{n=-\infty}^{+\infty} s^n P_n(t)
 \end{equation}
 
@@ -310,19 +419,20 @@ G = e^{ -(\alpha + \beta) t} \sum_{m=0}^{+\infty} \frac{(\alpha s t)^m}{m!} \sum
 \end{split}
 \end{align}
 
-\subsection{}
-\begin{equation}
-\langle n\rangle = \frac{\partial G}{\partial s} \Bigg|_{x=1}
-\end{equation}
+Then it's probably possible to do some algebra and write last equation in form of \ref{eq:genfungen} grouping terms with $s^n$ and finding $P_n(t)$.
 
 \subsection{}
 \begin{equation}
-\langle n\rangle = t(\alpha - \frac{\beta}{s^2})e^{-t(\alpha + \beta)} e^{t(\alpha s + \frac{\beta}{s})} \Bigg|_{x=1} = t(\alpha - \beta)
+\langle n\rangle = \frac{\partial G}{\partial s} \Bigg|_{s=1}
+\end{equation}
+
+\begin{equation}
+\langle n\rangle = t(\alpha - \frac{\beta}{s^2})e^{-t(\alpha + \beta)} e^{t(\alpha s + \frac{\beta}{s})} \Bigg|_{s=1} = t(\alpha - \beta)
 \end{equation}
 
 
 \begin{equation}
-\langle n^2 \rangle = \frac{\partial}{\partial s} \Bigg( s\frac{\partial G}{\partial s} \Bigg) \Bigg|_{x=1} = t(t(\alpha - \beta)^2+\alpha + \beta)
+\langle n^2 \rangle = \frac{\partial}{\partial s} \Bigg( s\frac{\partial G}{\partial s} \Bigg) \Bigg|_{s=1} = t(t(\alpha - \beta)^2+\alpha + \beta)
 \end{equation}
 
 \begin{equation}
@@ -332,6 +442,9 @@ G = e^{ -(\alpha + \beta) t} \sum_{m=0}^{+\infty} \frac{(\alpha s t)^m}{m!} \sum
 
 
 \subsection{}
+
+Source code for numerical simulation of random walker is available on \href{https://github.com/andrei-fys/FYS4130/blob/master/markov.cpp}{Random walker}
+
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.6]{0505variance}
@@ -344,7 +457,7 @@ G = e^{ -(\alpha + \beta) t} \sum_{m=0}^{+\infty} \frac{(\alpha s t)^m}{m!} \sum
 \begin{figure}
   \begin{center}
     \includegraphics[scale=0.6]{0505displacement}
-    \caption {Time development of mean displacement $\langle n\rangle$ for a random walker. 1000000 Monte Carlo samples were used, , $\alpha=\beta=0.5$}
+    \caption {Time development of mean displacement $\langle n\rangle$ for a random walker. 1000000 Monte Carlo samples were used, $\alpha=\beta=0.5$}
     \label{fig:displ}
   \end{center}
 \end{figure}
