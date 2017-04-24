@@ -1,0 +1,358 @@
+\documentclass[10pt]{article}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{flexisym}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\title{Obligatory assignment}
+\author{Andrei Kukharenka}
+
+\begin{document}
+
+\maketitle
+%\tableofcontents
+
+\section{Problem 1: Lattice gas}
+\subsection{}
+Here we need to show that the grand canonical partition function for the lattice gas model is equivalent to the
+canonical partition function for the Ising model of a ferromagnetic. In general case it's not possible to obtain analytical solution neither for Ising model nor for the lattice gas model. So we need to show that grand canonical partition function for the lattice gas have a similar form to canonical partition function for the Ising model, namely:
+
+
+\begin{equation}\label{isingpartfun}
+Z_n=\sum_{s}e^{\beta E_s},
+\end{equation}
+where energy of state can be found by:
+\begin{equation}\label{isingenergy}
+E=-J\sum_{\langle kl\rangle }^{N}s_{k}s_{l} - B\sum_{k}^{N}s_k
+\end{equation}
+
+For the lattice gas model grand canonical partition function can be written as:
+
+\begin{equation}\label{latgaspartfun}
+\Xi =\sum_{n^\prime}e^{\beta(N\mu - E_{n^{\prime}})},
+\end{equation}
+
+where summation goes over all microstates and $E_n$ is:
+\begin{equation}\label{latgasen}
+E_n= - \epsilon \sum_{\langle ij\rangle }n_i n_j,
+\end{equation}
+
+
+Ising model is a binary system where spin variable can have two values, normally +1 and -1. Lattice gas model is a binary system as well with $n_i=0$ and $n_i=1$ corresponding to unoccupied and occupied positions correspondingly. Let us make a mapping between mentioned models. Denote:
+
+\[
+\sigma_i = 2n_i - 1
+\]
+
+so we have:
+
+\[
+\sigma_i = -1 \Leftrightarrow n_i = 0
+\]
+\[
+\sigma_i = 1 \Leftrightarrow n_i = 1
+\]
+Now rewrite \ref{latgaspartfun} in new variables:
+
+\begin{equation}\label{latgaspartfunnewvars}
+\Xi =\sum_{\sigma}e^{\beta(N\mu + \epsilon/4 \sum_{\langle ij\rangle }(\sigma_i+1)(\sigma_j+1))},
+\end{equation}
+
+If $A$ is a number representing number of nearest neighbors, so in a system with $N$ sites we have $AN/2$ nearest neighbors pairs.
+
+\begin{equation}\label{secondtermpower}
+\frac{\epsilon}{4} \sum_{\langle ij\rangle }(\sigma_i+1\sigma_j + \sigma_i + \sigma_j + 1) = \frac{\epsilon}{4} \Bigg\{\sum_{\langle ij\rangle }(\sigma_i\sigma_j + \sigma_i + \sigma_j) + \frac{AN}{2}\Bigg\}
+\end{equation}
+
+\begin{align}
+\begin{split}
+\frac{\epsilon}{4} \Bigg\{\frac{AN}{2} + \sum_{\langle ij\rangle }\sigma_i\sigma_j +  \sum_{\langle ij\rangle }(\sigma_i + \sigma_j)\Bigg\} = \frac{\epsilon}{4} \Bigg\{\frac{AN}{2} + \sum_{\langle ij\rangle }\sigma_i\sigma_j +  2\sum_{i}^{AN/2}\sigma_i\Bigg\} = \\
+\frac{\epsilon}{4} \Bigg\{\frac{AN}{2} + \sum_{\langle ij\rangle }\sigma_i\sigma_j +  \sum_{i}^{AN}\sigma_i\Bigg\} = \frac{\epsilon}{4} \Bigg\{\frac{AN}{2} + \sum_{\langle ij\rangle }\sigma_i\sigma_j +  A\sum_{i}^{N}\sigma_i\Bigg\}
+\label{eq:newbasisintro}
+\end{split}
+\end{align}
+
+All particles in new variables:
+
+\[
+N = \sum_{i}n_i = \frac{1}{2} \sum_{i} (\sigma_i + 1)
+\]
+
+So we can rewrite:
+
+\begin{equation}\label{allpart}
+N\mu = (\frac{1}{2}N + \frac{1}{2}\sum_{i} \sigma_i)\mu
+\end{equation}
+
+Let us consider power of the exponent from equation \ref{latgaspartfunnewvars} taking into account results \ref{eq:newbasisintro} and \ref{allpart} :
+
+\begin{equation}
+\beta(N\mu + \frac{\epsilon}{4} \sum_{\langle ij\rangle }(\sigma_i+1)(\sigma_j+1)) = \frac {\beta \epsilon}{4} \sum_{\langle ij\rangle }\sigma_i\sigma_j + \frac {\beta \mu N}{2} + \frac {\epsilon AN}{8} + \beta \sum_{i}\sigma_i\Bigg\{\frac{A\epsilon}{4} + \frac{\mu}{2} \Bigg\}
+\end{equation}
+
+Simplifying and regrouping last equation one gets:
+\begin{equation}
+\frac {\beta}{4} \Bigg\{ \epsilon \sum_{\langle ij\rangle }\sigma_i\sigma_j  + (2\mu +A\epsilon)\sum_{i}\sigma_i + N(2\mu + \frac{A\epsilon}{2}) \Bigg\}
+\end{equation}
+
+Finally \ref{latgaspartfunnewvars}:
+
+\begin{equation}\label{chtd}
+\Xi =\sum_{\sigma}exp \Bigg\{\frac {\beta}{4} \Bigg\{ \epsilon \sum_{\langle ij\rangle }\sigma_i\sigma_j  + (2\mu +A\epsilon)\sum_{i}\sigma_i + N(2\mu + \frac{A\epsilon}{2}) \Bigg\}\Bigg\}
+\end{equation}
+
+It's easy to see that this formula is nothing but partition function for Ising model with:
+\[
+J=\frac{\epsilon}{4}
+\]
+
+
+\[
+B=\frac{2\mu + A\epsilon}{4}
+\]
+\subsection{}
+For 2$\times$2 lattice there are 16 possible energy configurations. Some configurations have same energy (Table \ref{tab:2x2}).
+
+\begin{table}[h!]
+  \caption{Energy and number of particles for two-dimensional lattice gas model with square lattice. Lattice size is 2$\times$2. Periodic boundary conditions were used.}
+  \label{tab:2x2}
+  \begin{center}
+    \begin{tabular}{c|c|c}
+    \hline
+		Number of particles & Degeneracy & Energy, $\epsilon$ \\
+        \hline
+	$	0 $  & $ 1 $ & $  0 $   \\
+	$	1 $  & $ 4 $ & $  0 $   \\
+	$	2 $  & $ 2 $ & $  0 $   \\
+	$	2 $  & $ 4 $ & $  -2 $   \\
+	$	3 $  & $ 4 $ & $  -4 $   \\
+  $	4 $  & $ 1 $ & $  -8 $   \\
+
+	\end{tabular}
+  \end{center}
+\end{table}
+
+From Table \ref{tab:2x2} it is easy to write partition function for 2$\times$2 case:
+\begin{equation}\label{eg:taskb:pfun}
+\Xi = 1 + 4e^{\beta \mu} + 4e^{2\beta( \mu + \epsilon)} + 2e^{2\beta \mu} + 4e^{\beta(3\mu + 4\epsilon)} + e^{4\beta( \mu + 2\epsilon)}
+\end{equation}
+Mean energy and number of particles are then:
+
+\begin{align}
+\begin{split}
+E = -\frac{\partial(ln(\Xi))}{\partial \beta} = \frac{-1}{\Xi} (4\mu e^{\beta \mu} + 8( \mu + \epsilon)e^{2\beta( \mu + \epsilon)} + \\
++ 4\mu e^{2\beta \mu} + 4(3\mu + 4\epsilon)e^{\beta(3\mu + 4\epsilon)} + 4( \mu + 2\epsilon)e^{4\beta( \mu + 2\epsilon)})
+\label{eg:taskb:energy}
+\end{split}
+\end{align}
+
+
+\begin{align}
+\begin{split}
+N = \frac{1}{\beta}\frac{\partial(ln(\Xi))}{\partial \mu} = \frac{1}{\Xi} (4e^{\beta \mu} + 8e^{2\beta( \mu + \epsilon)} + \\
++ 4e^{2\beta \mu} + 12e^{\beta(3\mu + 4\epsilon)} + 4e^{4\beta( \mu + 2\epsilon)})
+\label{eg:taskb:numpart}
+\end{split}
+\end{align}
+
+
+\subsection{}
+See Fig. \ref{fig:taskc}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.6]{taskc}
+    \caption {Mean number of particles vs. $\mu/\epsilon$. $\beta \epsilon=1$}
+    \label{fig:taskc}
+  \end{center}
+\end{figure}
+
+
+\subsection{}
+N=2 corresponds $\mu/\epsilon$=-2
+\section{Problem 2: Quantum statistics}
+\section{Problem 3: Relaxation to equilibrium}
+One can write master equation for each energy level($\pm \epsilon$):
+\begin{equation}\label{minus}
+\frac{d n_{-}}{dt} = n_{-} \omega_{+} - n_{+} \omega_{-}
+\end{equation}
+
+\begin{equation}\label{plus}
+\frac{d n_{+}}{dt} = n_{+} \omega_{-} - n_{-} \omega_{+}
+\end{equation}
+
+Now we try to rewrite master equation for our system in a form of relaxation differential equation:
+
+\begin{equation}\label{qw}
+\frac{\partial n}{\partial t} = - \frac{ n - n_0}{\tau}
+\end{equation}
+
+In equilibrium:
+\begin{equation}\label{plusminus}
+\frac{d n_{+}}{dt} = \frac{d n_{-}}{dt} \Rightarrow \frac{n_{+}^0}{n_{-}^0} = \frac{\omega_{+}}{\omega_{-}} 
+\end{equation}
+
+Denote $n$ as:
+\begin{equation}\label{changevar1}
+n= n_{+} - n_{-}
+\end{equation}
+
+From \ref{plus} and \ref{minus}:
+\begin{equation}\label{plusminusdt}
+\frac{\partial n}{\partial t} = 2n_{+}\omega_{-} - 2n_{-}\omega_{+}
+\end{equation}
+
+As a number of particles is constant:
+
+\begin{align}
+\begin{split}
+N = n_{+} + n_{-} \\
+N = n_{+}^0 + n_{-}^0
+\label{eq:varchange}
+\end{split}
+\end{align}
+
+From \ref{eq:varchange} using \ref{changevar1} we express $2n_{+}$ and $2n_{-}$ as:
+
+\begin{align}
+\begin{split}
+2n_{+} = n_{-}^0 + n_{+}^0 - n\\
+2n_{-} = n_{+}^0 + n_{-}^0 + n
+\label{eq:2n}
+\end{split}
+\end{align}
+
+Then \ref{plusminusdt} can be rewritten as:
+
+\begin{align}
+\begin{split}
+\frac{\partial n}{\partial t} = n_{-}^0\omega_{-} + n_{+}^0\omega_{-} - n\omega_{-} - n_{+}^0\omega_{+} - n_{-}^0\omega_{+} - n\omega_{+} = \\
+= -n(\omega_{-} + \omega_{+}) + n_{-}^0(\omega_{-} - \omega_{+}) + n_{+}^0(\omega_{-} - \omega_{+})
+\label{eq:newvar}
+\end{split}
+\end{align}
+
+From \ref{plusminus} and \ref{changevar1}:
+\begin{align}
+\begin{split}
+n^0 = n_{+}^0\frac{\omega_{-}-\omega_{+}}{\omega_{+}} \Rightarrow \omega_{+}n^0 =n_{+}^0(\omega_{-}-\omega_{+}) \\
+n^0 = n_{-}^0\frac{\omega_{-}-\omega_{+}}{\omega_{-}} \Rightarrow \omega_{-}n^0 = n_{-}^0(\omega_{-}-\omega_{+})
+\label{eq:newvar2}
+\end{split}
+\end{align}
+
+Putting obtained result into \ref{eq:newvar} one obtains:
+
+\begin{align}
+\begin{split}
+\frac{\partial n}{\partial t} = -n(\omega_{-} + \omega_{+}) + n^0\omega_{-} + n^0\omega_{+} = \\
+= -(n(\omega_{-} + \omega_{+} - n^0(\omega_{-} + \omega_{+})) = \\
+= - \frac{n - n_0}{(\omega_{-} + \omega_{+})^{-1}}
+c
+\end{split}
+\end{align}
+Comparing with \ref{qw}
+\begin{equation}\label{changevar123}
+\tau = (\omega_{-} + \omega_{+})^{-1}
+\end{equation}
+
+\section{Problem 4: Random walk}
+\subsection{}
+Master equation for 1D random walk:
+
+\begin{equation}
+\frac{d P_n}{dt} = \alpha(P_{n-1} - P_n) +\beta(P_{n+1} - P_n)
+\end{equation}
+\subsection{}
+To solve master equation we use generating function method. Lets write generating function for a general case:
+
+\begin{equation}
+G(s,t) = \sum_{n=-\infty}^{+\infty} s^n P_n(t)
+\end{equation}
+
+It's derivative in respect to time is then:
+
+\begin{align}
+\begin{split}
+\frac{\partial G}{\partial t} = \sum_{n=-\infty}^{+\infty} s^n \frac{d P_n}{dt} = \sum_{n=-\infty}^{+\infty} s^n (\alpha(P_{n-1} - P_n) +\beta(P_{n+1} - P_n)) = \\
+= \sum_{n=-\infty}^{+\infty} s^n \alpha P_{n-1} - \sum_{n=-\infty}^{+\infty} s^n \alpha P_{n} + \sum_{n=-\infty}^{+\infty} s^n \beta P_{n+1} - \sum_{n=-\infty}^{+\infty} s^n \beta P_{n} = \\
+\alpha s G - \alpha G - \beta G + \frac{1}{s}\beta G = \alpha G(s-1) + \beta G(\frac{1}{s} - 1)
+\label{eq:generatingderiv}
+\end{split}
+\end{align}
+
+Solving \ref{eq:generatingderiv} we get:
+
+\begin{equation}
+ln(G) = \big\{\alpha G(s-1) + \beta G(\frac{1}{s} - 1)\big\}t + A,
+\end{equation}
+
+where A is a constant. Lets find it from initial condition $G(s,0)=1$:
+\begin{align}
+\begin{split}
+G = e^{ -(\alpha + \beta) t} e^{ (\alpha s + \frac{\beta}{s})t} e^A \Rightarrow e^A=1 \Rightarrow A=0
+\label{eq:incond}
+\end{split}
+\end{align}
+Rewriting exponent as power series:
+\begin{align}
+\begin{split}
+G = e^{ -(\alpha + \beta) t} \sum_{m=0}^{+\infty} \frac{(\alpha s t)^m}{m!} \sum_{l=0}^{+\infty} \frac{(\beta t s^{-1})^l}{l!}
+\label{eq:razloj}
+\end{split}
+\end{align}
+
+\subsection{}
+\begin{equation}
+\langle n\rangle = \frac{\partial G}{\partial s} \Bigg|_{x=1}
+\end{equation}
+
+\subsection{}
+\begin{equation}
+\langle n\rangle = t(\alpha - \frac{\beta}{s^2})e^{-t(\alpha + \beta)} e^{t(\alpha s + \frac{\beta}{s})} \Bigg|_{x=1} = t(\alpha - \beta)
+\end{equation}
+
+
+\begin{equation}
+\langle n^2 \rangle = \frac{\partial}{\partial s} \Bigg( s\frac{\partial G}{\partial s} \Bigg) \Bigg|_{x=1} = t(t(\alpha - \beta)^2+\alpha + \beta)
+\end{equation}
+
+\begin{equation}
+\sigma^2 = \langle n^2 \rangle - \langle n\rangle^2 = t(\alpha + \beta)
+\end{equation}
+
+
+
+\subsection{}
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.6]{0505variance}
+    \caption {Time development of $\sigma^2$(t)i for a random walker. 1000000 Monte Carlo samples were used, $\alpha=\beta=0.5$}
+    \label{fig:var}
+  \end{center}
+\end{figure}
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.6]{0505displacement}
+    \caption {Time development of mean displacement $\langle n\rangle$ for a random walker. 1000000 Monte Carlo samples were used, , $\alpha=\beta=0.5$}
+    \label{fig:displ}
+  \end{center}
+\end{figure}
+
+
+
+
+
+
+
+\end{document}
